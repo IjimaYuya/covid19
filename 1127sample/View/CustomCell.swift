@@ -30,10 +30,13 @@ class CustomCell: UITableViewCell {
     
     // MARK: - Method
     func setLabelText(response: Covid19ReportStruct) {
-//        todoufukenLabel.text = response.name_ja
-//        if response.cases > 5000{
-//            kansennshaLabel.textColor = .red
-//        }
-//        todoufukenLabel.text = String(response.cases)
+        guard let responseDate = response.responseData else {
+            return
+        }
+        todoufukenLabel.text = response.responseData?.name_ja
+        if responseDate.cases > 5000{
+            kansennshaLabel.textColor = .red
+        }
+        kansennshaLabel.text = String(responseDate.cases)
     }
 }

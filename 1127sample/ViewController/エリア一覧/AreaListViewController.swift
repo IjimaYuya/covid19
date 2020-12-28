@@ -13,6 +13,7 @@ class AreaListViewController: UIViewController {
     
     /// プレゼンター
     private var presenter = AreaListPresenter()
+    
     /// インジケーター
     private let indicator = UIActivityIndicatorView()
     /// 日付
@@ -86,7 +87,7 @@ private extension AreaListViewController {
     
     /// セルの登録
     func registerTableViewCell() {
-        myTableView.register(UINib(nibName: "CustomCell", bundle: nil) , forCellReuseIdentifier: "customCell")
+        myTableView.register(UINib(nibName: "CustomCell", bundle: nil) , forCellReuseIdentifier: "CustomCell")
     }
 }
 
@@ -96,22 +97,21 @@ extension AreaListViewController: UITableViewDataSource {
     
     ///Rowの数
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        presenter.getTodofukensuu(areaNum: section)
-        return 1
+        return presenter.getTodofukensuu(areaNum: section)
     }
     
     ///セルの表示内容
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "customCell", for: indexPath) as? CustomCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as? CustomCell else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
             return cell }
-//        let todofukenDetailforCell =  presenter.getResponse(areaNum: indexPath.section, row: indexPath.row)
+        let todofukenDetailforCell = presenter.getResponse(areaNum: indexPath.section, row: indexPath.row)
         
         //セル再利用防止
 //        cell.kansennshaLabel.text = ""
 //        cell.kansennshaLabel.text = ""
 //        cell.kansennshaLabel.textColor = .black
-//        cell.setLabelText(response: todofukenDetailforCell)
+        cell.setLabelText(response: todofukenDetailforCell)
         return cell
     }
   
@@ -122,7 +122,6 @@ extension AreaListViewController: UITableViewDataSource {
     
     ///セクションの数
     func numberOfSections(in tableView: UITableView) -> Int {
-        print(presenter.getAreaNum())
         return presenter.getAreaNum()
     }
 }
